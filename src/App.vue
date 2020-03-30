@@ -1,16 +1,13 @@
 <template>
   <v-app>
+    <v-app-bar app>
+      <v-toolbar-title>COVID-19 Outbreak</v-toolbar-title>
+      <v-spacer></v-spacer>
+      <v-switch v-model="isDarkMode" @change="onChangeMode" label="Dark Mode"></v-switch>
+    </v-app-bar>
     <v-content>
       <v-container>
-        <v-autocomplete v-model="currentCountry"
-         :items="countriesSelectList"
-         label="Select Country"></v-autocomplete>
-        <v-sparkline
-        :key="currentCountry"
-        :value="getConfirmedForCountry(currentCountry)"
-        :gradient="gradients"
-        :line-width="0.8"
-        auto-draw></v-sparkline>
+        <router-view />
       </v-container>
     </v-content>
   </v-app>
@@ -18,37 +15,19 @@
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
-import { getAllTimeSeries, getConfirmedByCountry, getCountries, getTotalConfirmed } from "@/lib/covid-time-series";
-import CovidState from "@/models/ICovidStat";
+import { getValueAsBoolean, setValue } from "@/helpers/local-storage-helpers";
 
 @Component
 export default class App extends Vue {
-  timeData: Record<string, CovidState[]> = {};
-  currentCountry = 'US';
+  isDarkMode = getValueAsBoolean("mode");
 
-  get gradients() {
-    return ['#f72047', '#ffd200', '#1feaea']
-  }
-
-  get countriesSelectList() {
-    const countries = getCountries(this.timeData);
-    countries.splice(0, 0, 'All');
-
-    return countries;
-  }
-
-  getConfirmedForCountry(country: string) {
-    if(country === 'All') {
-      return getTotalConfirmed(this.timeData);
-    }
-
-    return getConfirmedByCountry(this.timeData, country);
+  onChangeMode() {
+    this.$vuetify.theme.dark = this.isDarkMode;
+    setValue("mode", this.isDarkMode.toString());
   }
 
   mounted() {
-    getAllTimeSeries().then(data => {
-      this.timeData = data;
-    });
+    this.$vuetify.theme.dark = this.isDarkMode;
   }
 }
 </script>
