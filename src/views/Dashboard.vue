@@ -18,7 +18,9 @@
       <v-col cols="6">
         <AffectedCountries :countries="affectedCountries"></AffectedCountries>
       </v-col>
-      <v-col cols="6"></v-col>
+      <v-col cols="6">
+        <DashboardDistributionCard :data="affectedCountries"></DashboardDistributionCard>
+      </v-col>
     </v-row>
   </v-container>
 </template>
@@ -39,9 +41,14 @@ import {
   NovelCountriesInformation
 } from "../models";
 import AffectedCountries from "@/components/dashboard/AffectedCountries.vue";
+import DashboardDistributionCard from "@/components/dashboard/DashboardDistributionCard.vue";
 
 @Component({
-  components: { DashboardStatCard, AffectedCountries }
+  components: {
+    DashboardStatCard,
+    AffectedCountries,
+    DashboardDistributionCard
+  }
 })
 export default class DashboardView extends Vue {
   timeData: Record<string, CovidState[]> = {};

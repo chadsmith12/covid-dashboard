@@ -1,4 +1,4 @@
-import { GlobalCovidInfo, CovidCountryInfo } from "@/models/index";
+import { GlobalCovidInfo, CovidCountryInfo, CountryDataSeries } from "@/models/index";
 import { CountryInfo } from './api-models';
 
 export class NovelGlobalCovidInformation {
@@ -57,5 +57,29 @@ export class NovelCountriesInformation {
         return this.countries.reduce((prev, current) => {
             return prev + current.totalCritical
         }, 0);
+    }
+
+    topCasesDistribution(numberCases: number): CountryDataSeries[] {
+        const distributionData: CountryDataSeries[] = []
+        for (let i = 0; i < numberCases; i++) {
+            const item: CountryDataSeries = {
+                country: this.countries[i].name,
+                value: this.countries[i].totalCases
+            };
+            distributionData.push(item)
+        }
+
+        // get all the other countries data
+        let sum = 0;
+        for (let i = numberCases; i < this.countries.length; i++) {
+            sum += this.countries[i].totalCases;
+        }
+
+        distributionData.push({
+            country: 'Other',
+            value: sum
+        });
+
+        return distributionData;
     }
 }

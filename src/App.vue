@@ -3,7 +3,7 @@
     <v-app-bar app>
       <v-toolbar-title>COVID-19 Outbreak</v-toolbar-title>
       <v-spacer></v-spacer>
-      <v-switch v-model="isDarkMode" @change="onChangeMode" label="Dark Mode"></v-switch>
+      <v-switch class="pt-5" v-model="isDarkMode" @change="onChangeMode" label="Dark Mode"></v-switch>
     </v-app-bar>
     <v-content>
       <v-container>
