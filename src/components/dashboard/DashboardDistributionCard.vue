@@ -11,7 +11,7 @@
         :stroke-width="2"
         :stroke-opacity="1"
         show-legend
-        dark
+        :dark="isDarkMode"
       ></PieChart>
     </v-card-text>
   </v-card>
@@ -32,6 +32,10 @@ export default class DashboardDistributionCard extends Vue {
     }
 
     return this.data.topCasesDistribution(6);
+  }
+
+  get isDarkMode() {
+    return this.$store.state.isDarkMode;
   }
 }
 </script>

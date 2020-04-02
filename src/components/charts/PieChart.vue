@@ -47,18 +47,17 @@ export default class PieChart extends Vue {
     }
   }
 
-  mounted() {
-    this.setCharmThemes();
-    this.chart = am4core.create(this.$refs.pieChartDiv, am4Charts.PieChart);
-    const pieSeries = this.chart.series.push(new am4Charts.PieSeries());
-    this.chart.data = this.data;
-    this.chart.innerRadius = this.innerRadius;
-    pieSeries.dataFields.value = this.valueField;
-    pieSeries.dataFields.category = this.categoryField;
-    if (this.showLegend) {
-      this.chart.legend = new am4Charts.Legend();
+  @Watch("dark")
+  darkChagned() {
+    if (this.chart) {
+      am4core.unuseAllThemes();
+      this.chart.dispose();
+      this.createChart();
     }
-    this.setChartSettings(pieSeries);
+  }
+
+  mounted() {
+    this.createChart();
   }
 
   setChartSettings(series: am4Charts.PieSeries) {
@@ -76,9 +75,24 @@ export default class PieChart extends Vue {
     if (this.animated) {
       am4core.useTheme(am4themesAnimated);
     }
+    console.log("inside setCharmThemes", this.dark);
     if (this.dark) {
       am4core.useTheme(am4themesDark);
     }
+  }
+
+  createChart() {
+    this.setCharmThemes();
+    this.chart = am4core.create(this.$refs.pieChartDiv, am4Charts.PieChart);
+    const pieSeries = this.chart.series.push(new am4Charts.PieSeries());
+    this.chart.data = this.data;
+    this.chart.innerRadius = this.innerRadius;
+    pieSeries.dataFields.value = this.valueField;
+    pieSeries.dataFields.category = this.categoryField;
+    if (this.showLegend) {
+      this.chart.legend = new am4Charts.Legend();
+    }
+    this.setChartSettings(pieSeries);
   }
 }
 </script>
