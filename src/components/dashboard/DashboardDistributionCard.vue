@@ -7,7 +7,7 @@
         value-field="value"
         category-field="country"
         :inner-radius="40"
-        stroke="#4a2abb"
+        stroke="#2B2D2F"
         :stroke-width="2"
         :stroke-opacity="1"
         show-legend
