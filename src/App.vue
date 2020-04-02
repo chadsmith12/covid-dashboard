@@ -29,7 +29,6 @@ export default class App extends Vue {
 
   mounted() {
     this.$vuetify.theme.dark = this.isDarkMode;
-    console.log("setting darkmode...", this.isDarkMode);
     this.$store.commit("SET_DARK_MODE", { isDarkMode: this.isDarkMode });
   }
 }

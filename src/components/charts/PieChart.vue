@@ -75,7 +75,7 @@ export default class PieChart extends Vue {
     if (this.animated) {
       am4core.useTheme(am4themesAnimated);
     }
-    console.log("inside setCharmThemes", this.dark);
+
     if (this.dark) {
       am4core.useTheme(am4themesDark);
     }
