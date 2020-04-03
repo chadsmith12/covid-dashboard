@@ -6,9 +6,7 @@
       <v-switch class="pt-5" v-model="isDarkMode" @change="onChangeMode" label="Dark Mode"></v-switch>
     </v-app-bar>
     <v-content>
-      <v-container>
-        <router-view />
-      </v-container>
+      <router-view />
     </v-content>
   </v-app>
 </template>

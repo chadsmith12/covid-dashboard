@@ -60,12 +60,19 @@ export default class PieChart extends Vue {
     this.createChart();
   }
 
+  beforeDestroy() {
+    if (this.chart) {
+      this.chart.dispose();
+    }
+  }
+
   setChartSettings(series: am4Charts.PieSeries) {
     series.slices.template.stroke = am4core.color(this.stroke);
     series.slices.template.strokeWidth = this.strokeWidth;
     series.slices.template.strokeOpacity = this.strokeOpacity;
     series.labels.template.disabled = !this.showLabels;
     series.ticks.template.disabled = !this.showTicks;
+    series.slices.template.propertyFields.fill = "color";
     if (this.tooltipText) {
       series.slices.template.tooltipText = this.tooltipText;
     }

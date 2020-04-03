@@ -8,16 +8,36 @@
     <v-spacer></v-spacer>
     <v-row>
       <v-col cols="3">
-        <DashboardStatCard title="Number Cases" :stat="countryInfo.totalCases"></DashboardStatCard>
+        <DashboardStatCard
+          title="Number Cases"
+          :stat="countryInfo.totalCases"
+          show-today
+          :today="countryInfo.todayCases"
+          color="orange--text darken-1"
+        ></DashboardStatCard>
       </v-col>
       <v-col cols="3">
-        <DashboardStatCard title="Number Deaths" :stat="countryInfo.totalDeaths"></DashboardStatCard>
+        <DashboardStatCard
+          title="Number Deaths"
+          :stat="countryInfo.totalDeaths"
+          show-today
+          :today="countryInfo.todayDeaths"
+          color="red--text darken-2"
+        ></DashboardStatCard>
       </v-col>
       <v-col cols="3">
-        <DashboardStatCard title="Number Recovered" :stat="countryInfo.totalRecovered"></DashboardStatCard>
+        <DashboardStatCard
+          title="Number Recovered"
+          :stat="countryInfo.totalRecovered"
+          color="green--text darken-2"
+        ></DashboardStatCard>
       </v-col>
       <v-col cols="3">
-        <DashboardStatCard title="Total Active" :stat="countryInfo.totalActive"></DashboardStatCard>
+        <DashboardStatCard
+          title="Total Active"
+          :stat="countryInfo.totalActive"
+          color="blue--text darken-1"
+        ></DashboardStatCard>
       </v-col>
     </v-row>
     <v-row>
@@ -50,6 +70,7 @@ import { getCountryCovidData } from "@/lib/novel-covid-api";
 import { CountryCovidInformation } from "../models";
 import DashboardStatCard from "@/components/dashboard/DashboardStatCard.vue";
 import PieChart from "@/components/charts/PieChart.vue";
+import { color } from "@amcharts/amcharts4/core";
 
 @Component({
   components: { DashboardStatCard, PieChart }
@@ -66,10 +87,26 @@ export default class CountryView extends Vue {
     }
 
     return [
-      { category: "Active", value: this.countryInfo.totalActive },
-      { category: "Recovered", value: this.countryInfo.totalRecovered },
-      { category: "Deaths", value: this.countryInfo.totalDeaths },
-      { category: "Critical", value: this.countryInfo.totalCritical }
+      {
+        category: "Active",
+        value: this.countryInfo.totalActive,
+        color: color("#FB8C00")
+      },
+      {
+        category: "Recovered",
+        value: this.countryInfo.totalRecovered,
+        color: color("#388E3C")
+      },
+      {
+        category: "Deaths",
+        value: this.countryInfo.totalDeaths,
+        color: color("#D32F2F")
+      },
+      {
+        category: "Critical",
+        value: this.countryInfo.totalCritical,
+        color: color("#FBC02D")
+      }
     ];
   }
 

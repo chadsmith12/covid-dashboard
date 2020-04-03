@@ -1,10 +1,17 @@
 <template>
   <v-card raised :elevation="10">
-    <v-card-title>{{ title }}</v-card-title>
+    <v-card-title>
+      {{ title }}
+      <v-spacer></v-spacer>
+      <span v-if="showToday" class="font-weight-light subtitle-2">
+        Today:
+        <span class="font-weight-medium" :class="color">{{today}}</span>
+      </span>
+    </v-card-title>
     <v-card-text class="text-center">
       <v-row align="center">
         <v-col class="display-3" cols="12">
-          <count-to :start-val="0" :end-val="endValue" :duration="duration"></count-to>
+          <count-to :class="color" :start-val="0" :end-val="endValue" :duration="duration"></count-to>
         </v-col>
       </v-row>
     </v-card-text>
@@ -24,6 +31,9 @@ import { getNumberDigits, getFirstDigit } from "@/helpers/number-helper";
 export default class DashboardStatCard extends Vue {
   @Prop({ type: String, default: "" }) title!: string;
   @Prop({ type: Number, required: true }) stat!: number;
+  @Prop({ type: Boolean, default: false }) showToday!: boolean;
+  @Prop({ type: Number, required: false }) today!: number;
+  @Prop({ type: String, required: false, default: "" }) color!: string;
 
   get duration() {
     if (!this.stat) {
