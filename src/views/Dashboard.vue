@@ -1,13 +1,13 @@
 <template>
-  <v-container>
+  <v-container fluid>
     <v-row>
-      <v-col cols="12" sm="6" md="6" lg="3">
+      <v-col cols="12" sm="6" md="6" lg="3" xl="3">
         <DashboardStatCard title="Number Cases" :stat="globalCases" color="orange--text darken-1" />
       </v-col>
-      <v-col cols="12" sm="6" md="6" lg="3">
+      <v-col cols="12" sm="6" md="6" lg="3" xl="3">
         <DashboardStatCard title="Number Deaths" :stat="globalDeaths" color="red--text darken-2" />
       </v-col>
-      <v-col cols="12" sm="6" md="6" lg="3">
+      <v-col cols="12" sm="6" md="6" lg="3" xl="3">
         <DashboardStatCard
           title="Number Recovered"
           :stat="globalRecovered"
