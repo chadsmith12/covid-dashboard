@@ -11,3 +11,11 @@ export interface CountryDataSeries {
      */
     value: number;
 }
+
+/**
+ * Represents a single point in a timeline for a country
+ */
+export interface CountryTimeItem {
+    date: Date;
+    value: number;
+}

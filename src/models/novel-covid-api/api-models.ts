@@ -152,3 +152,15 @@ export interface CovidStateInfo {
      */
     active: number;
 }
+
+export interface CountryTimeLine {
+    cases: Record<string, number>;
+    deaths: Record<string, number>;
+    recovered: Record<string, number>;
+}
+
+export interface HistoricalTimeLine {
+    country: string;
+    province: string | null;
+    timeline: CountryTimeLine;
+}

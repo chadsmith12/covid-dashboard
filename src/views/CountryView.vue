@@ -1,13 +1,13 @@
 <template>
   <v-container v-if="isLoading"></v-container>
-  <v-container v-else>
+  <v-container v-else fluid>
     <div class="d-flex justify-center pb-2">
       <v-img :src="countryInfo.countryInfo.flag" max-width="128" max-height="64"></v-img>
       <span class="display-2 pl-3 pt-2">{{ countryInfo.name }}</span>
     </div>
     <v-spacer></v-spacer>
     <v-row>
-      <v-col cols="3">
+      <v-col cols="12" sm="6" lg="3">
         <DashboardStatCard
           title="Number Cases"
           :stat="countryInfo.totalCases"
@@ -16,7 +16,7 @@
           color="orange--text darken-1"
         ></DashboardStatCard>
       </v-col>
-      <v-col cols="3">
+      <v-col cols="12" sm="6" lg="3">
         <DashboardStatCard
           title="Number Deaths"
           :stat="countryInfo.totalDeaths"
@@ -25,14 +25,14 @@
           color="red--text darken-2"
         ></DashboardStatCard>
       </v-col>
-      <v-col cols="3">
+      <v-col cols="12" sm="6" lg="3">
         <DashboardStatCard
           title="Number Recovered"
           :stat="countryInfo.totalRecovered"
           color="green--text darken-2"
         ></DashboardStatCard>
       </v-col>
-      <v-col cols="3">
+      <v-col cols="12" sm="6" lg="3">
         <DashboardStatCard
           title="Total Active"
           :stat="countryInfo.totalActive"
@@ -41,7 +41,7 @@
       </v-col>
     </v-row>
     <v-row>
-      <v-col cols="6">
+      <v-col cols="12" lg="6">
         <v-card raised>
           <v-card-title>{{ countryInfo.name }}'s Distribution</v-card-title>
           <v-card-text>
@@ -66,8 +66,11 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
-import { getCountryCovidData } from "@/lib/novel-covid-api";
-import { CountryCovidInformation } from "../models";
+import {
+  getCountryCovidData,
+  getCountryTimeSeries
+} from "@/lib/novel-covid-api";
+import { CountryCovidInformation, CountryTimeItem } from "../models";
 import DashboardStatCard from "@/components/dashboard/DashboardStatCard.vue";
 import PieChart from "@/components/charts/PieChart.vue";
 import { color } from "@amcharts/amcharts4/core";
@@ -79,6 +82,7 @@ export default class CountryView extends Vue {
   @Prop() countryCode!: string;
 
   countryInfo: CountryCovidInformation | null = null;
+  casesTimeLine: CountryTimeItem[] = [];
   isLoading = true;
 
   get countryDistribution() {
@@ -110,11 +114,11 @@ export default class CountryView extends Vue {
     ];
   }
 
-  mounted() {
-    getCountryCovidData(this.countryCode).then(data => {
-      this.countryInfo = data;
-      this.isLoading = false;
-    });
+  async mounted() {
+    const countryData = await getCountryCovidData(this.countryCode);
+    this.casesTimeLine = await getCountryTimeSeries(countryData.name);
+    this.countryInfo = countryData;
+    this.isLoading = false;
   }
 }
 </script>
