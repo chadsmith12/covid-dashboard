@@ -53,10 +53,26 @@
               stroke="#4a2abb"
               :stroke-width="2"
               :stroke-opacity="1"
-              height="400px"
+              height="500px"
               show-legend
-              dark
+              :dark="isDarkMode"
             ></PieChart>
+          </v-card-text>
+        </v-card>
+      </v-col>
+      <v-col cols="12" lg="6">
+        <v-card raised>
+          <v-card-title>{{ countryInfo.name }}'s Growth Rate</v-card-title>
+          <v-card-text>
+            <TimeChart
+              :data="casesTimeLine"
+              value-field="value"
+              date-field="date"
+              :stroke-width="2"
+              tooltip-text="{value}"
+              series-name="Cases"
+              :dark="isDarkMode"
+            ></TimeChart>
           </v-card-text>
         </v-card>
       </v-col>
@@ -73,10 +89,11 @@ import {
 import { CountryCovidInformation, CountryTimeItem } from "../models";
 import DashboardStatCard from "@/components/dashboard/DashboardStatCard.vue";
 import PieChart from "@/components/charts/PieChart.vue";
+import TimeChart from "@/components/charts/TimeChart.vue";
 import { color } from "@amcharts/amcharts4/core";
 
 @Component({
-  components: { DashboardStatCard, PieChart }
+  components: { DashboardStatCard, PieChart, TimeChart }
 })
 export default class CountryView extends Vue {
   @Prop() countryCode!: string;
@@ -112,6 +129,10 @@ export default class CountryView extends Vue {
         color: color("#FBC02D")
       }
     ];
+  }
+
+  get isDarkMode() {
+    return this.$store.state.isDarkMode;
   }
 
   async mounted() {

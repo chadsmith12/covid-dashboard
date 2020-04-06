@@ -41,7 +41,7 @@
               :stroke-opacity="1"
               height="400px"
               show-legend
-              dark
+              :dark="isDarkMode"
             ></PieChart>
           </v-card-text>
         </v-card>
@@ -118,6 +118,10 @@ export default class DashboardView extends Vue {
 
   get gradients() {
     return ["#f72047", "#ffd200", "#1feaea"];
+  }
+
+  get isDarkMode() {
+    return this.$store.state.isDarkMode;
   }
 
   get countriesSelectList() {
