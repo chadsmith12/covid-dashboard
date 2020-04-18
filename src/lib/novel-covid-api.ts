@@ -3,7 +3,7 @@ import { NovelGlobalCovidInformation, GlobalCovidInfo, NovelCountriesInformation
 const NOVEL_BASE_URL = 'https://corona.lmao.ninja';
 
 export function getAllCovidInfo(): Promise<NovelGlobalCovidInformation> {
-    const url = makeApiUrl(NOVEL_BASE_URL, 'all');
+    const url = makeApiUrl(NOVEL_BASE_URL, 'v2/all');
 
     return fetch(url)
         .then(response => response.json())
@@ -13,7 +13,7 @@ export function getAllCovidInfo(): Promise<NovelGlobalCovidInformation> {
 }
 
 export function getAllCovidCountryData(options: GetCovidCountryDataOptions): Promise<NovelCountriesInformation> {
-    const url = makeApiUrl(NOVEL_BASE_URL, 'countries', options);
+    const url = makeApiUrl(NOVEL_BASE_URL, 'v2/countries', options);
 
     return fetch(url)
         .then(response => response.json())
@@ -23,7 +23,7 @@ export function getAllCovidCountryData(options: GetCovidCountryDataOptions): Pro
 }
 
 export function getCountryCovidData(country: string): Promise<CountryCovidInformation> {
-    const url = makeApiUrl(NOVEL_BASE_URL, `countries/${country}`);
+    const url = makeApiUrl(NOVEL_BASE_URL, `v2/countries/${country}`);
 
     return fetch(url)
         .then(response => response.json())
@@ -33,7 +33,7 @@ export function getCountryCovidData(country: string): Promise<CountryCovidInform
 }
 
 export function getStatesCovidData(): Promise<CovidStateInfo[]> {
-    const url = makeApiUrl(NOVEL_BASE_URL, 'states');
+    const url = makeApiUrl(NOVEL_BASE_URL, 'v2/states');
 
     return fetch(url)
         .then(response => response.json());
