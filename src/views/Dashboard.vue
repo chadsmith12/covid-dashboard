@@ -2,10 +2,22 @@
   <v-container fluid>
     <v-row>
       <v-col cols="12" sm="6" lg="3">
-        <DashboardStatCard title="Number Cases" :stat="globalCases" color="orange--text darken-1" />
+        <DashboardStatCard
+          title="Number Cases"
+          :stat="globalCases"
+          show-today
+          :today="todayCases"
+          color="orange--text darken-1"
+        />
       </v-col>
       <v-col cols="12" sm="6" lg="3">
-        <DashboardStatCard title="Number Deaths" :stat="globalDeaths" color="red--text darken-2" />
+        <DashboardStatCard
+          title="Number Deaths"
+          :stat="globalDeaths"
+          show-today
+          :today="todayDeaths"
+          color="red--text darken-2"
+        />
       </v-col>
       <v-col cols="12" sm="6" lg="3">
         <DashboardStatCard
@@ -92,12 +104,28 @@ export default class DashboardView extends Vue {
     return this.covidInfo.totalCases;
   }
 
+  get todayCases() {
+    if (!this.covidInfo) {
+      return 0;
+    }
+
+    return this.covidInfo.todayCases;
+  }
+
   get globalDeaths() {
     if (!this.covidInfo) {
       return 0;
     }
 
     return this.covidInfo.totalDeaths;
+  }
+
+  get todayDeaths() {
+    if (!this.covidInfo) {
+      return 0;
+    }
+
+    return this.covidInfo.todayDeaths;
   }
 
   get globalRecovered() {
@@ -175,3 +203,23 @@ export default class DashboardView extends Vue {
 }
 </script>
 
+<style>
+::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+  background-color: #f5f5f571;
+}
+
+::-webkit-scrollbar {
+  width: 12px;
+  background-color: #f5f5f509;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  background-color: #555;
+}
+</style>

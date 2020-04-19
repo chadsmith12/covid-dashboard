@@ -13,7 +13,13 @@
         ></v-text-field>
       </v-card-title>
       <v-card-text>
-        <v-data-table height="450" :items="tableData" :headers="tableHeaders" :search="search">
+        <v-data-table
+          class="table-scroll"
+          height="450"
+          :items="tableData"
+          :headers="tableHeaders"
+          :search="search"
+        >
           <template v-slot:item.countryName="{ item }">
             <router-link
               :to="{name: 'CountryView', params: {countryCode: item.countryCode}}"
@@ -21,7 +27,8 @@
           </template>
           <template v-slot:item.totalCases="{ item }">{{ item.totalCases.toLocaleString() }}</template>
           <template v-slot:item.totalDeaths="{ item }">{{ item.totalDeaths.toLocaleString() }}</template>
-          <template v-slot:item.totalRecovery="{ item }">{{ item.totalRecovery.toLocaleString() }}</template>
+          <template v-slot:item.totalRecovered="{ item }">{{ item.totalRecovered.toLocaleString() }}</template>
+          <template v-slot:item.numberTests="{ item }">{{ item.numberTests.toLocaleString() }}</template>
         </v-data-table>
       </v-card-text>
     </v-card>
@@ -49,7 +56,8 @@ export default class AffectedCountries extends Vue {
         countryName: country.name,
         totalCases: country.totalCases,
         totalDeaths: country.totalDeaths,
-        totalRecovery: country.totalRecovered
+        totalRecovered: country.totalRecovered,
+        numberTests: country.numberTests
       };
     });
 
@@ -61,7 +69,8 @@ export default class AffectedCountries extends Vue {
       { text: "Country", value: "countryName" },
       { text: "Total Cases", value: "totalCases", filterable: false },
       { text: "Total Deaths", value: "totalDeaths", filterable: false },
-      { text: "Total Recovery", value: "totalRecovery", filterable: false }
+      { text: "Total Recovered", value: "totalRecovered", filterable: false },
+      { text: "Total Tests", value: "numberTests", filterable: false }
     ];
   }
 }

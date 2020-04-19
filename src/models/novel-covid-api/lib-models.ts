@@ -7,6 +7,8 @@ export class NovelGlobalCovidInformation {
     totalRecovered: number;
     lastUpdated: Date;
     totalActive: number;
+    todayDeaths: number;
+    todayCases: number;
 
     constructor(globalInfo: GlobalCovidInfo) {
         this.totalCases = globalInfo.cases;
@@ -14,6 +16,8 @@ export class NovelGlobalCovidInformation {
         this.totalRecovered = globalInfo.recovered;
         this.lastUpdated = new Date(globalInfo.updated);
         this.totalActive = globalInfo.active;
+        this.todayCases = globalInfo.todayCases;
+        this.todayDeaths = globalInfo.todayDeaths;
     }
 }
 
@@ -29,6 +33,7 @@ export class CountryCovidInformation {
     totalCritical: number;
     casesPerOneMillion: number;
     deathsPerOneMillion: number;
+    numberTests: number;
     lastUpdated: Date;
     constructor(countryInfo: CovidCountryInfo) {
         this.name = countryInfo.country;
@@ -42,6 +47,7 @@ export class CountryCovidInformation {
         this.totalCritical = countryInfo.critical;
         this.casesPerOneMillion = countryInfo.casesPerOneMillion;
         this.deathsPerOneMillion = countryInfo.deathsPerOneMillion;
+        this.numberTests = countryInfo.tests;
         this.lastUpdated = new Date(countryInfo.updated);
     }
 }

@@ -5,7 +5,7 @@
       <v-spacer></v-spacer>
       <span v-if="showToday" class="font-weight-light subtitle-2">
         Today:
-        <span class="font-weight-medium" :class="color">{{today}}</span>
+        <span class="font-weight-medium" :class="color">{{today.toLocaleString()}}</span>
       </span>
     </v-card-title>
     <v-card-text class="text-center">

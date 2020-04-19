@@ -22,6 +22,14 @@ export interface GlobalCovidInfo {
      * The total number of active cases
      */
     active: number;
+    /**
+     * The number of deaths today
+     */
+    todayCases: number;
+    /**
+     * The number of deaths today
+     */
+    todayDeaths: number;
 }
 
 /**
@@ -77,6 +85,10 @@ export interface CovidCountryInfo {
      * the number of milliseconds last updated in ISO Date
      */
     updated: number;
+    /**
+     * The number of tests preformed.
+     */
+    tests: number;
 }
 
 /**
