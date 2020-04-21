@@ -187,7 +187,7 @@ export default class DashboardView extends Vue {
     return getConfirmedByCountry(this.timeData, country);
   }
 
-  mounted() {
+  reloadData() {
     getAllTimeSeries().then(data => {
       this.timeData = data;
     });
@@ -199,6 +199,12 @@ export default class DashboardView extends Vue {
     getAllCovidCountryData({ sort: "cases" }).then(data => {
       this.affectedCountries = data;
     });
+  }
+
+  mounted() {
+    this.reloadData();
+
+    setInterval(this.reloadData, 120000);
   }
 }
 </script>
