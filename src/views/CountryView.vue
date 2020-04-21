@@ -62,7 +62,16 @@
       </v-col>
       <v-col cols="12" lg="6">
         <v-card raised>
-          <v-card-title>{{ countryInfo.name }}'s Growth Rate</v-card-title>
+          <v-card-title>
+            {{ countryInfo.name }}'s Growth Rate
+            <v-spacer></v-spacer>
+            <span class="font-weight-light subtitle-2">
+              Average Cases Per Day:
+              <span
+                class="font-weight-medium"
+              >{{averageCasesPerDay.toLocaleString()}}</span>
+            </span>
+          </v-card-title>
           <v-card-text>
             <TimeChart
               :data="casesTimeLine"
@@ -102,6 +111,30 @@ export default class CountryView extends Vue {
   casesTimeLine: CountryTimeItem[] = [];
   isLoading = true;
 
+  get averageCasesPerDay() {
+    if (!this.casesTimeLine) {
+      return 0;
+    }
+
+    const casesDeltas: number[] = [];
+    for (let i = 1; i < this.casesTimeLine.length; i += 2) {
+      if (i >= this.casesTimeLine.length) {
+        break;
+      }
+
+      casesDeltas.push(
+        this.casesTimeLine[i].value - this.casesTimeLine[i - 1].value
+      );
+    }
+
+    let sum = 0;
+    for (let i = 0; i < casesDeltas.length; i++) {
+      sum += casesDeltas[i];
+    }
+
+    return Math.round(sum / casesDeltas.length);
+  }
+
   get countryDistribution() {
     if (!this.countryInfo) {
       return [];
@@ -135,11 +168,18 @@ export default class CountryView extends Vue {
     return this.$store.state.isDarkMode;
   }
 
-  async mounted() {
+  async reloadData() {
+    this.isLoading = true;
     const countryData = await getCountryCovidData(this.countryCode);
     this.casesTimeLine = await getCountryTimeSeries(countryData.name);
     this.countryInfo = countryData;
     this.isLoading = false;
+  }
+
+  async mounted() {
+    this.reloadData();
+
+    setInterval(this.reloadData, 120000);
   }
 }
 </script>
